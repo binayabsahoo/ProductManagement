@@ -1,0 +1,101 @@
+﻿@model ProductManagement.ViewModels.ProductListViewModel
+
+@*@{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <title>PartialAddProduct</title>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+        <br />
+
+
+
+
+    </body>
+    </html>*@
+
+<div class="container">
+
+
+    @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+                        
+                @Html.HiddenFor(m => m.ProductID)
+        
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Product Name:</label>
+            <div class="col-xs-9 col-md-9">
+                @*<input type="text" class="form-control" name="ProductName" id="txtProductName" placeholder="Enter Product Name" />*@
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Product Catagory:</label>
+            <div class="col-xs-9 col-md-9">
+                @Html.DropDownListFor(m => m.SelectedCategory, Model.CatagoryList.Select(x => new SelectListItem { Text = x.CategoryName, Value = Convert.ToString(x.CategoryID) }).ToList(), "Select Category", new { @class = "btn btn-primary dropdown-toggle" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Price:</label>
+            <div class="col-xs-9 col-md-9">
+                @*<input type="text" class="form-control" name="Price" id="txtPrice" placeholder="Enter Price in Rupees" />*@
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Sellers:</label>
+            <div class="col-xs-9 col-md-9">
+                @*<select id="drpdwnSellers" class="multiselect-ui form-control" multiple="multiple"></select>*@
+                @Html.ListBoxFor(m => m.SelectedSellers, new MultiSelectList(Model.SellerList, "SellerID", "SellerName"), new { @class = "multiselect-ui form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Cash On Delivery:</label>
+            <div class="col-xs-9 col-md-9">
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(m => m.CashOnDelevery, "Yes", new { @class = "radio-inline" })Yes
+                </label>
+
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(m => m.CashOnDelevery, "No", new { @class = "radio-inline" })No
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3">Image:</label>
+            <div class="col-xs-9 col-md-9">
+                <div class="btn btn-default image-preview-input">
+                    @Html.TextBoxFor(m => m.productImage, new { type = "file" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3 col-md-3"></label>
+            <div class="col-xs-9 col-md-9">
+                @if (Model.ProductID > 0)
+                {
+                    <input type="submit" id="btnSave" name="Update" value="Update" class="btn btn-primary btn-md" />
+                }
+                else
+                {
+                    <input type="submit" id="btnSave" name="Save" value="Save" class="btn btn-primary btn-md" />
+                }
+
+
+                <input type="button" id="btnClear" name="Clear" value="Clear" class="btn btn-primary btn-md" />
+            </div>
+        </div>
+    }
+
+
+</div>
